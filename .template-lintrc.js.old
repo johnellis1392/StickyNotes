@@ -1,0 +1,15 @@
+/* eslint-env node */
+'use strict';
+
+module.exports = {
+  rules: {
+    'bare-strings': true,
+    'block-indentation': true,
+    'invalid-interactive': true,
+    'no-debugger': true,
+    'inline-styles': true,
+    'no-duplicate-attributes': true,
+    'style-concatenation': true,
+    'unused-block-params': true
+  }
+};
