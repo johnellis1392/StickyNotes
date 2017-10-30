@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from "react"
+// import PropTypes from "prop-types"
 import { withRouter } from "react-router-dom"
 
-import { Canvas, StickyNote } from 'common/components'
-import styles from './App.scss'
-import _ from 'underscore'
+import { Canvas, StickyNote } from "common/components"
+import styles from "./App.scss"
+import _ from "underscore"
 
 
 const Button = withRouter(({ history }) => (
@@ -18,6 +18,7 @@ export default class App extends Component {
   }
 
   static propTypes = {}
+
 
 
   render() {
