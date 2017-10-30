@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+$fontFamily: 'Open Sans', sans-serif;
+$backgroundColor: white;
+
+:global {
+  #root {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    position: relative;
+  }
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  min-width: 600px;
+  overflow: auto;
+}
+
+body {
+  font-family: $fontFamily;
+  font-size: 16px;
+  background-color: $backgroundColor;
+  margin: 0;
+}
+
+h2 {
+  font-size: 30px;
+  color: #333333;
+}
