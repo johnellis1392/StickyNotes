@@ -5,19 +5,26 @@ module.exports = {
   root: true,
   parserOptions: {
     ecmaVersion: 2017,
-    sourceType: 'module',
+    sourceType: "module",
     ecmaFeatures: {
-      experimentalObjectRestSpread: true
+      experimentalObjectRestSpread: true,
+      jsx: true,
     }
   },
-  extends: 'eslint:recommended',
+  extends: "eslint:recommended",
   env: {
-    browser: true
+    browser: true,
+    node: true,
   },
   rules: {
     "semi": ["error", "never"],
     "no-shadow": "error",
     "no-undefined": "error",
-    "quotes": [2, "double", "avoid-escape"]
-  }
-};
+    "quotes": [2, "double", "avoid-escape"],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+  },
+  plugins: [
+    "react",
+  ],
+}

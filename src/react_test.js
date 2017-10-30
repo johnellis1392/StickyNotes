@@ -1,13 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from 'pages/app'
-import 'jquery'
+import React from "react"
+import ReactDOM from "react-dom"
+import App from "pages/app"
+import "jquery"
 
 
-<
->
-something
 ReactDOM.render(
   <App />,
-  document.getElementById('root')
+  document.getElementById("root")
 )

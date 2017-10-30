@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from "redux"
 
 
 const configureStore = (baseHistory, initialState = {}) => {
-  console.log(something)
+  console.log(something) // eslint-disable-line
   const store = createStore(rootReducer, initialState, applyMiddleware(thunk, createLogger()))
 
   if (!baseHistory) {
