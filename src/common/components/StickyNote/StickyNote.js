@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Rect } from 'common/components'
-import styles from './StickyNote.scss'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+// import { Rect } from "common/components"
+import styles from "./StickyNote.scss"
 
 
 export class StickyNote extends Component {

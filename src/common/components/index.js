@@ -1,4 +1,4 @@
-import _ from 'underscore'
+import _ from "underscore"
 
 const context = require.context(__dirname, true, /\/.+\/index.js$/)
 const data = _.chain(context.keys())

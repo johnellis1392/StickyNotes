@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { mapRecursive } from 'common/utils'
-import styles from './Canvas.scss'
+import React, { Component } from "react"
+import d3 from "d3"
+import styles from "./Canvas.scss"
 
 
 
@@ -23,9 +23,21 @@ export class Canvas extends Component {
     // Iterate through D3 elements & redraw
     // (put here as an example)
 
-    const root = d3.select('.root')
+    const root = d3.select(".root")
+    const canvas = root.parentNode.appendChild(document.createElement("canvas"))
+    const context = canvas.getContext("2d")
+
     for (let child = root.firstChild; child; child = child.nextSibling) {
       // Draw Child Element
+      const element = child
+
+      switch (element.tagName) {
+      case "circle":
+        context.strokeStyle = element.getAttribute("strokeStyle")
+        context.beginPath()
+        context.arc(element.getAttribute("x"), element.getAttribute("y"), element.getAttribute("radius"), 0, 2 * Math.PI)
+        context.stroke()
+      }
     }
   }
 

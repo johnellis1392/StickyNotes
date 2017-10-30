@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import styles from './Rect.scss'
+import React, { Component } from "react"
+import styles from "./Rect.scss"
 
 
 export class Rect extends Component {

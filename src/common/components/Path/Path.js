@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import styles from './Path.scss'
+import React, { Component } from "react"
+import styles from "./Path.scss"
 
 
 export class Path extends Component {

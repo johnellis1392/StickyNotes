@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import styles from './Circle.scss'
+import React, { Component } from "react"
+import styles from "./Circle.scss"
 
 
 export class Circle extends Component {

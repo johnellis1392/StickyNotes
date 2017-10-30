@@ -1,2 +1,2 @@
-import StickyNote from './StickyNote'
+import StickyNote from "./StickyNote"
 export default StickyNote
