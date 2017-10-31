@@ -1,13 +1,24 @@
-var _ = require("underscore")
+// var _ = require("underscore")
+//
+// const context = require.context(__dirname, true, /\.js$/)
+// const data = {}
+// _.forEach(context.keys(), (key) => {
+//   const fileData = context(key)
+//   if (fileData.default) delete fileData.default
+//   for (const prop in fileData) {
+//     data[prop] = fileData[prop]
+//   }
+// })
+//
+// module.exports = data
 
-const context = require.context(__dirname, true, /\.js$/)
-const data = {}
-_.forEach(context.keys(), (key) => {
-  const fileData = context(key)
-  if (fileData.default) delete fileData.default
-  for (const prop in fileData) {
-    data[prop] = fileData[prop]
-  }
-})
+import * as api from "./api"
+import createReducer from "./createReducer"
+// import * as reactUtils from "./ReactUtils"
+export * from "./ReactUtils"
 
-module.exports = data
+export {
+  api,
+  createReducer,
+  // ...reactUtils,
+}
