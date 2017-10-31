@@ -10,6 +10,7 @@ import configureStore from "store"
 import getRoutes from "routes"
 import * as i18n from "./i18n"
 import "jquery"
+import "bootstrap"
 import "bootstrap/dist/css/bootstrap.css"
 import "base.scss"
 
@@ -22,15 +23,19 @@ const browserHistoryConfig = {}
 const store = configureStore(createBrowserHistory(browserHistoryConfig), window.__INITIAL_STATE__)
 
 
+// import Piano from "./common/components/examples/Piano/Piano"
 ReactDOM.render(
   <IntlProvider locale="en" messages={i18n.en_us}>
     <Provider store={store}>
       <BrowserRouter>
         <Layout>
           {getRoutes(store)}
+          {/* <Piano /> */}
         </Layout>
       </BrowserRouter>
-      </Provider>
+    </Provider>
   </IntlProvider>,
   document.getElementById("root")
+  // document.getElementsByTagName("body")[0]
+  // document.body
 )

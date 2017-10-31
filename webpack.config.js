@@ -1,20 +1,64 @@
 const path = require("path")
 const webpack = require("webpack")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+
+
+const srcPath = path.resolve(__dirname, "src")
+const distPath = path.resolve(__dirname, "dist")
+const publicPath = "/assets/"
 
 
 module.exports = {
-  context: path.resolve(__dirname, "./src"),
-  entry: { "index": "./index.js" },
+  context: srcPath,
+
+  // Webpack Build Entrypoints
+  // NOTE: Can include multiple entrypoints
+  entry: {
+    "index": "./index.js",
+  },
+
   output: {
     filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "./dist"),
-    publicPath: "/assets/",
+    path: distPath,
+    publicPath,
   },
 
 
   devServer: {
-    contentBase: path.resolve(__dirname, "./src"),
-    historyApiFallback: true, // Make all requests fall through to index.html
+    // contentBase: distPath, // Base directory for static files
+    // watchContentBase: true,
+    contentBase: false,
+    index: "index.html",
+    publicPath,
+
+    host: "localhost",
+    port: 8081,
+
+    // hot: true,
+    compress: true,
+
+    // Make all requests fall through to index.html
+    historyApiFallback: {
+      rewrites: [
+        { from: /./, to: "/assets/index.html" },
+      ],
+    },
+
+
+
+    // Whitelisted Host Apis
+    allowedHosts: ["localhost:3000"],
+
+    // Proxy request url's
+    proxy: {
+      "/api": {
+        target: "http://localhost:3000",
+        secure: false,
+        pathRewrite: {
+          "^/api": "/api",
+        },
+      }
+    },
   },
 
   module: {
@@ -67,6 +111,7 @@ module.exports = {
     ],
   },
 
+
   resolve: {
     modules: [
       path.resolve("./src"),
@@ -81,5 +126,18 @@ module.exports = {
       $: "jquery",
       jquery: "jquery",
     }),
+
+    // Have Webpack generate our index.html
+    // NOTE: Need the index.html template here; rendering
+    // directly to <body/> is discouraged by react, so we
+    // need our index.html template to provide a container div.
+    new HtmlWebpackPlugin({
+      title: "Sticky Notes",
+      template: "index.html",
+      filename: "index.html",
+      inject: "body",
+      favicon: "public/favicon.ico",
+      publicPath,
+    })
   ],
 }
