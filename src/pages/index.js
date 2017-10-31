@@ -11,4 +11,4 @@ const exports = _.chain(context.keys())
   .object()
   .value()
 
-export default exports
+module.exports = exports

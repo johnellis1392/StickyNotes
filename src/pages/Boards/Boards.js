@@ -45,7 +45,7 @@ export class Boards extends Component {
 
     return (
       <div {...props}>
-        <table>
+        <table className={styles.boardTable}>
           <thead>
             <tr>
               <th>Name</th>

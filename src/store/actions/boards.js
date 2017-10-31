@@ -12,13 +12,7 @@ export const fetchBoards = ( /* params = {} */ ) => {
 
     dispatch({
       type: ACTION.BOARDS_FETCH_SUCCESS,
-      payload: {
-        boards: [{
-          id: "1",
-          name: "Board 1",
-          notes: [],
-        }],
-      },
+      payload: {},
     })
 
     return Promise.resolve()

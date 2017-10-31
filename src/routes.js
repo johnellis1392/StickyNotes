@@ -1,5 +1,5 @@
 import React from "react"
-import { Route, Switch } from "react-router"
+import { Route, Switch, Redirect } from "react-router"
 // import { PATH } from "common/const"
 import components from "./pages"
 
@@ -13,13 +13,17 @@ import components from "./pages"
 export default ( /* store */ ) => {
   return (
     <Switch>
-      <Route exact path="/" /*path={PATH.HOME()}*/ component={components.App} />
+      {/* <Route exact path="/" /*path={PATH.HOME()}* / component={components.App} /> */}
+
       <Route path="/boards">
         <Switch>
           <Route exact path="/boards" component={components.Boards} />
           <Route exact path="/boards/:boardId" component={components.BoardEditor} />
         </Switch>
       </Route>
+
+      {/* Redirect to boards */}
+      <Route exact path="/" render={() => <Redirect to="/boards" />}/>
 
       {/* <Route path="/data">
         <Switch>

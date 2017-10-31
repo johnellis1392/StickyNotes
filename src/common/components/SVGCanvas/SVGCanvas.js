@@ -11,11 +11,11 @@ export default class SVGCanvas extends Component {
 
   static propTypes = {
     elementId: PropTypes.string.isRequired,
-    children: PropTypes.arrayOf(
-      PropTypes.oneOfType(
-        /* ... */
-      )
-    ),
+    // children: PropTypes.arrayOf(
+    //   PropTypes.oneOfType(
+    //     /* ... */
+    //   )
+    // ),
   }
 
 

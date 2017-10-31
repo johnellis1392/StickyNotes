@@ -1,8 +1,10 @@
 import { createReducer } from "common/utils"
 import { ACTION } from "common/const"
 
+
 const initialState = {
   processing: false,
+  boards: [],
 }
 
 
@@ -15,6 +17,7 @@ export default createReducer(initialState, {
   },
 
   [ACTION.BOARDS_FETCH_SUCCESS]: (state, { boards } = {}) => {
+    if (!boards) boards = state.boards
     return {
       ...state,
       processing: false,
