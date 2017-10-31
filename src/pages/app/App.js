@@ -12,7 +12,7 @@ const Button = withRouter(({ history }) => (
 ))
 
 
-export default class App extends Component {
+export class App extends Component {
   constructor() {
     super()
   }
@@ -47,3 +47,6 @@ export default class App extends Component {
     )
   }
 }
+
+
+export default App

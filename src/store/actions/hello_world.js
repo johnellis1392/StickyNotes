@@ -1,4 +1,4 @@
-import { ACTION } from "const"
+import { ACTION } from "common/const"
 
 export const helloWorld = () => {
   return {
