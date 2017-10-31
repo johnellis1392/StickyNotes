@@ -14,6 +14,9 @@ import { fetchBoards } from "store/actions"
 import styles from "./Boards.scss"
 import _ from "underscore"
 
+import * as d3 from "d3"
+
+
 
 
 export class Boards extends Component {
@@ -57,6 +60,18 @@ export class Boards extends Component {
   }
 
 
+  componentDidMount() {
+    // Add D3 elements to component after render
+    const container = d3.select(this.inputRef)
+    container
+      .append("div")
+      .classed("something", true)
+      .style("width", "300px")
+      .style("height", "300px")
+      .style("background-color", "black")
+  }
+
+
   _onBoardClick = (id, e) => {
     e.preventDefault()
     this.props.history.push(PATH.BOARD_EDIT(id))
@@ -69,7 +84,7 @@ export class Boards extends Component {
     }
 
     return (
-      <div {...props}>
+      <div {...props} ref={input => this.inputRef = input}>
         <table className={styles.boardTable}>
           <thead>
             <tr>

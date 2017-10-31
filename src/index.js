@@ -21,6 +21,7 @@ window.__INITIAL_STATE__ = data
 const browserHistoryConfig = {}
 const store = configureStore(createBrowserHistory(browserHistoryConfig), window.__INITIAL_STATE__)
 
+
 ReactDOM.render(
   <IntlProvider locale="en" messages={i18n.en_us}>
     <Provider store={store}>

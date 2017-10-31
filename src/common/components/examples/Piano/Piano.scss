@@ -1,0 +1,28 @@
+.container {
+  // height: 100%;
+  // width: 100%;
+  height: 40%;
+  width: 40%;
+
+  .key {
+    &.white {
+      fill: #fff;
+      stroke: #777;
+
+      &:hover {
+        fill: cyan;
+        stroke: #00999b;
+      }
+    }
+
+    &.black {
+      fill: #333;
+      stroke: #000;
+
+      &:hover {
+        fill: magenta;
+        stroke: #910099;
+      }
+    }
+  }
+}
