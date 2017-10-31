@@ -41,9 +41,11 @@ export class BoardEditor extends Component {
 
     // Router
     history: PropTypes.shape({
+      go: PropTypes.func.isRequired,
       goBack: PropTypes.func.isRequired,
-      replace: PropTypes.func.isRequired,
+      goForward: PropTypes.func.isRequired,
       push: PropTypes.func.isRequired,
+      replace: PropTypes.func.isRequired,
     }).isRequired,
 
     // Url Pattern-Matching
