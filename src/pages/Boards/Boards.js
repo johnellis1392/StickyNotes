@@ -2,9 +2,14 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
+import { withRouter } from "react-router-dom"
+
+import { FormattedMessage } from "react-intl"
+import { Button } from "react-bootstrap"
 
 // import { Button, Form } from "react-bootstrap"
 // import { FormattedMessage } from "react-intl"
+import { PATH } from "common/const"
 import { fetchBoards } from "store/actions"
 import styles from "./Boards.scss"
 import _ from "underscore"
@@ -25,16 +30,32 @@ export class Boards extends Component {
       })
     ),
 
+    // Actions
     fetchBoards: PropTypes.func.isRequired,
+
+    // Router Options
+    history: PropTypes.shape({
+      goBack: PropTypes.func.isRequired,
+      replace: PropTypes.func.isRequired,
+      push: PropTypes.func.isRequired,
+    }).isRequired,
   }
+
 
   static defaultProps = {
     boards: [],
   }
 
 
+
   componentWillMount() {
     this.props.fetchBoards()
+  }
+
+
+  _onBoardClick = (id, e) => {
+    e.preventDefault()
+    this.props.history.push(PATH.BOARD_EDIT(id))
   }
 
 
@@ -50,6 +71,7 @@ export class Boards extends Component {
             <tr>
               <th>Name</th>
               <th>Num Notes</th>
+              <th/>
             </tr>
           </thead>
 
@@ -58,6 +80,7 @@ export class Boards extends Component {
               <tr key={id}>
                 <td>{name}</td>
                 <td>{notes.length}</td>
+                <td><Button onClick={_.partial(this._onBoardClick, id)}><FormattedMessage id="boards.edit" /></Button></td>
               </tr>
             ))}
           </tbody>
@@ -85,4 +108,6 @@ const mapDispatchToProps = (dispatch /*, props*/ ) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Boards)
+export const BoardsContainer = connect(mapStateToProps, mapDispatchToProps)(Boards)
+
+export default withRouter(BoardsContainer)

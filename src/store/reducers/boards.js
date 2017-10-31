@@ -9,10 +9,13 @@ const initialState = {
 
 
 export default createReducer(initialState, {
+
+  // Boards List
   [ACTION.BOARDS_FETCH]: (state) => {
     return {
       ...state,
       processing: true,
+      boards: null,
     }
   },
 
@@ -33,4 +36,33 @@ export default createReducer(initialState, {
       err,
     }
   },
+
+
+  // Single Board
+  [ACTION.BOARD_FETCH]: (state) => {
+    return {
+      ...state,
+      processing: true,
+      selectedBoard: null,
+    }
+  },
+
+  [ACTION.BOARD_FETCH_SUCCESS]: (state, { board } = {}) => {
+    if (!board) board = null
+    return {
+      ...state,
+      processing: false,
+      selectedBoard: board,
+    }
+  },
+
+  [ACTION.BOARD_FETCH_FAILURE]: (state, err = {}) => {
+    return {
+      ...state,
+      processing: false,
+      selectedBoard: null,
+      err,
+    }
+  },
+
 })

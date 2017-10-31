@@ -4,11 +4,11 @@ export const HOME = () => {
   return "/"
 }
 
-export const DATA = (path) => {
-  if (path) return `/data/${path}`
-  else return "/data"
+
+export const BOARDS = () => {
+  return "/boards"
 }
 
-export const PAGES = () => {
-  return DATA("pages")
+export const BOARD_EDIT = (boardId = "") => {
+  return `/boards/${boardId}`
 }

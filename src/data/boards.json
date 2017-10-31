@@ -3,6 +3,7 @@
   "boards": [{
     "id": "1",
     "name": "Board 1",
+    "description": "An Example Board",
     "notes": [{
       "id": "1",
       "name": "Note 1",
@@ -15,6 +16,7 @@
   }, {
     "id": "2",
     "name": "Board 2",
+    "description": "Another Example Board",
     "notes": []
   }]
 }
