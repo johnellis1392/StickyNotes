@@ -22,6 +22,8 @@ export default ( /* store */ ) => {
         </Switch>
       </Route>
 
+      <Route exact path="/tree" component={components.Tree} />
+
       {/* Unmatched Url: Redirect to Boards */}
       <Route render={() => <Redirect to="/boards" />}/>
 

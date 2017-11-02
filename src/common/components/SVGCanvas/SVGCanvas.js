@@ -11,6 +11,7 @@ export default class SVGCanvas extends Component {
 
   static propTypes = {
     elementId: PropTypes.string.isRequired,
+    className: PropTypes.string,
     // children: PropTypes.arrayOf(
     //   PropTypes.oneOfType(
     //     /* ... */
@@ -21,6 +22,7 @@ export default class SVGCanvas extends Component {
 
   static defaultProps = {
     elementId: uuid(),
+    className: "",
   }
 
 
@@ -36,7 +38,7 @@ export default class SVGCanvas extends Component {
   render() {
     const props = {
       id: this.props.elementId,
-      className: styles.container,
+      className: `${this.props.className} ${styles.container}`,
     }
 
     return (

@@ -39,7 +39,9 @@ export class Layout extends Component {
     return (
       <div {...props}>
         {this.renderSidebar()}
-        {this.props.children}
+        <div className={styles.body}>
+          {this.props.children}
+        </div>
       </div>
     )
   }

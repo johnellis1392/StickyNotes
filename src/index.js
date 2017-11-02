@@ -14,6 +14,7 @@ import "bootstrap"
 import "bootstrap/dist/css/bootstrap.css"
 import "base.scss"
 
+
 // Set initial redux state
 import data from "./data"
 window.__INITIAL_STATE__ = data

@@ -1,4 +1,7 @@
 .container {
+  height: inherit;
+  width: inherit;
+
   .sidebar {
     display: flex;
     flex-direction: row;
@@ -8,5 +11,10 @@
     .sidebarItem {
       /* */
     }
+  }
+
+  .body {
+    height: inherit;
+    width: inherit;
   }
 }
