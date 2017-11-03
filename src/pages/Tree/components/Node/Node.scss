@@ -1,0 +1,18 @@
+.container {
+  fill: steelblue;
+
+  circle {
+    title {}
+  }
+
+  text {
+    fill: black;
+    text-anchor: middle;
+  }
+
+  .textBackground {
+    fill: white;
+    stroke: black;
+    stroke-width: 1px;
+  }
+}

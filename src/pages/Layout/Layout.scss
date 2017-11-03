@@ -1,8 +1,11 @@
 .container {
   height: inherit;
   width: inherit;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
 
-  .sidebar {
+  .topbar {
     display: flex;
     flex-direction: row;
     background-color: black;
@@ -14,7 +17,8 @@
   }
 
   .body {
-    height: inherit;
-    width: inherit;
+    flex: 1;
+    // height: inherit;
+    // width: inherit;
   }
 }

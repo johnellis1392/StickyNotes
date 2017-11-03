@@ -15,9 +15,9 @@ export class Layout extends Component {
   }
 
 
-  renderSidebar() {
+  _renderTopbar() {
     const props = {
-      className: styles.sidebar,
+      className: styles.topbar,
     }
 
     return (
@@ -38,7 +38,7 @@ export class Layout extends Component {
 
     return (
       <div {...props}>
-        {this.renderSidebar()}
+        {this._renderTopbar()}
         <div className={styles.body}>
           {this.props.children}
         </div>

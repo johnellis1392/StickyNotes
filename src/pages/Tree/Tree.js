@@ -5,60 +5,61 @@ import { bindActionCreators } from "redux"
 import * as d3 from "d3"
 import _ from "underscore"
 
+import { Link, Node, DistributeBy } from "./components"
 import { SVGCanvas } from "common/components"
 import styles from "./Tree.scss"
 
 
 
-// Render tree node
-const radius = 11
-const [centerX, centerY] = [500, 500]
-export const Node = ({ name, x = centerX, y = centerY }) => {
-  const props = {
-    className: styles.node,
-    transform: `translate(${[x, y]})`,
-  }
-
+const renderNodes = ({ nodes = [], links = [] }) => {
   return (
-    <g {...props}>
-      <circle r={radius}>
-        <title>{name}</title>
-      </circle>
-      <text dy="17">{name}</text>
+    <g>
+      <g className={styles.links}>
+        {_.map(links, (link) => <Link key={link.id} className={`${link.className || ""} ${styles.link}`} {...link} />)}
+      </g>
+
+      <g className={styles.nodes}>
+        {_.map(nodes, (node) => <Node key={node.id} className={`${node.className || ""} ${styles.node}`} {...node} />)}
+      </g>
     </g>
   )
 }
 
 
-const positionLink = ({ source, target, intermediate = null }) => {
-  const transform = d3.zoomIdentity
-
-  const src = transform.apply([source.x, source.y])
-  const dst = transform.apply([target.x, target.y])
-  const mid = intermediate ? transform.apply([intermediate.x, intermediate.y]) : null
-
-  const m = `M ${src[0]}, ${src[1]}`
-  const s = mid ? ` Q ${mid[0]}, ${mid[1]}` : ""
-  const l = ` ${dst[0]}, ${dst[1]}`
-
-  return m + s + l
-}
-
-export const Link = (link) => {
-  const props = {
-    className: styles.link,
-    d: positionLink(link),
-  }
-
-  return (
-    <path {...props} />
-  )
-}
+// export class renderNodes extends Component {
+//   static propTypes = {
+//     nodes: PropTypes.array.isRequired,
+//     links: PropTypes.array.isRequired,
+//   }
+//
+//   static defaultProps = {
+//     nodes: [],
+//     links: [],
+//   }
+//
+//
+//   render() {
+//     const { nodes, links } = this.props
+//     debugger // eslint-disable-line
+//     return (
+//       <g>
+//         <g className={styles.links}>
+//           {_.map(links, (link) => <Link key={link.id} className={styles.link} {...link} />)}
+//         </g>
+//
+//         <g className={styles.nodes}>
+//           {_.map(nodes, (node) => <Node key={node.id} className={styles.node} {...node} />)}
+//         </g>
+//       </g>
+//     )
+//   }
+// }
 
 
 
 /**
  * Tree
+ * TODO: Add Distributions
  */
 export class Tree extends Component {
   constructor() {
@@ -77,50 +78,101 @@ export class Tree extends Component {
       name: PropTypes.string,
       children: PropTypes.array,
     }),
+
+    // distributionfield: PropTypes.string,
   }
 
-  static defaultProps = {}
+  static defaultProps = {
+    // distributionfield: null,
+    // distributionfield: "currency",
+  }
 
 
   componentWillMount = () => {
-    const { root } = this.props
-    const nodeMap = this._makeNodeMap(root)
-    const nodes = Object.values(nodeMap)
-    const links = this._makeLinks(root)
     const simulation = this._makeSimulation()
-    simulation.on("tick", this._tick)
     this.setState({
-      nodeMap,
-      nodes,
-      links,
       simulation,
     }, () => {
-      this._updateSimulation(nodes, links)
+      simulation.on("tick", this._tick)
+      this._update(this.props)
     })
   }
 
 
   componentWillReceiveProps = (newProps) => {
-    const { root } = newProps
+    this._update(newProps)
+  }
+
+
+
+  _update = ({ root } = this.props) => {
     const nodeMap = this._makeNodeMap(root)
     const nodes = Object.values(nodeMap)
     const links = this._makeLinks(root)
+
+    const intermediates = this._makeIntermediates(links)
+    const intermediateLinks = this._makeIntermediateLinks(intermediates)
+    const simnodes = nodes.concat(intermediates)
+    const simlinks = this._makeSimlinks(intermediates)
+
+
     this.setState({
       nodeMap,
       nodes,
-      links,
+      links: intermediateLinks,
+      intermediates,
+      intermediateLinks,
+      simnodes,
+      simlinks,
     }, () => {
-      this._updateSimulation(nodes, links)
+      this._updateSimulation(simnodes, simlinks)
+    })
+  }
+
+
+  _makeSimlinks = (intermediates) => {
+    return _.chain(intermediates)
+      .map((intermediate) => {
+        const { source, target } = intermediate
+        return [
+          { id: `${source.id}-s-i-${target.id}`, source, target: intermediate },
+          { id: `${source.id}-i-${target.id}`, source, target },
+          { id: `${source.id}-i-t-${target.id}`, source: intermediate, target },
+        ]
+      })
+      .flatten()
+      .value()
+  }
+
+
+  _makeIntermediateLinks = (intermediates) => {
+    return _.chain(intermediates)
+      .map((intermediate) => {
+        const { source, target } = intermediate
+        return {
+          id: `${source.id}-i-${target.id}`,
+          source,
+          target,
+          intermediate,
+        }
+      })
+      .value()
+  }
+
+
+  _makeIntermediates = (links) => {
+    // Make an intermediate node for every link
+    return _.map(links, ({ source, target }) => {
+      return {
+        id: `${source.id}-i-${target.id}`,
+        source,
+        target,
+      }
     })
   }
 
 
   _tick = () => {
-    // TODO: Update node positions
-    // Is this necessary?
-
-    // const { links, nodes } = this.state // eslint-disable-line
-    // debugger // eslint-disable-line
     this.forceUpdate()
   }
 
@@ -171,7 +223,6 @@ export class Tree extends Component {
       })
     })
 
-    // const childLinks = _.map(node.children, this._makeLinks)
     const childLinks = _.chain(node.children)
       .map(this._makeLinks)
       .reduce((acc, a) => acc.concat(a), [])
@@ -193,15 +244,34 @@ export class Tree extends Component {
   }
 
 
+
   render() {
-    const { nodes, links } = this.state
     return (
       <SVGCanvas className={styles.container}>
-        {_.map(nodes, (node) => <Node key={node.id} {...node} />)}
-        {_.map(links, (link) => <Link key={link.id} {...link} />)}
+        <DistributeBy nodes={this.state.nodes} links={this.state.links}>
+          {renderNodes}
+          {/* <renderNodes/> */}
+        </DistributeBy>
       </SVGCanvas>
     )
   }
+
+
+  // render() {
+  //   const { nodes, links } = this.state
+  //   return (
+  //     <SVGCanvas className={styles.container}>
+  //       <g className={styles.links}>
+  //         {_.map(links, (link) => <Link key={link.id} className={styles.link} {...link} />)}
+  //       </g>
+  //
+  //       <g className={styles.nodes}>
+  //         {_.map(nodes, (node) => <Node key={node.id} className={styles.node} {...node} />)}
+  //       </g>
+  //     </SVGCanvas>
+  //   )
+  // }
+
 }
 
 
